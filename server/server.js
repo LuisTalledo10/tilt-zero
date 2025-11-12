@@ -277,7 +277,16 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => console.log(`Servidor escuchando en http://localhost:${PORT}`));
+// Añadir logging para errores globales (ayuda a depurar fallos que causan 502 en hosts)
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err && err.stack ? err.stack : err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled rejection:', reason);
+});
+
+// Escuchar en todas las interfaces (0.0.0.0) y en el puerto provisto por el entorno
+server.listen(PORT, '0.0.0.0', () => console.log(`Servidor escuchando en http://0.0.0.0:${PORT}`));
 
 // ----------------------
 // Gestor simple de rondas

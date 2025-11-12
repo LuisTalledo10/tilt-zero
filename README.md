@@ -28,3 +28,14 @@ Notas:
 - Se crea un usuario de ejemplo `player1` con 5000 fichas y ELO 1000.
 - API en tiempo real: events `requestLogin`, `userData`, `placeBet`, `betResult`.
 - La lógica de ELO y payout es simplificada para el MVP y puede ajustarse.
+
+Variables de entorno
+- `PORT` (opcional): puerto en el que escuchará el servidor. En hosting como Render se asigna automáticamente.
+- `DB_PATH` (opcional): ruta al archivo SQLite. Por defecto `server/tiltzero.db`. Puedes personalizarla en entornos donde el filesystem es diferente.
+
+Ejemplo `.env`:
+
+```
+PORT=3000
+DB_PATH=server/tiltzero.db
+```

@@ -4,7 +4,8 @@
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 
-const DB_PATH = path.join(__dirname, 'tiltzero.db');
+// Permitir configurar la ruta de la base de datos mediante variable de entorno DB_PATH
+const DB_PATH = process.env.DB_PATH ? String(process.env.DB_PATH) : path.join(__dirname, 'tiltzero.db');
 let db = null;
 
 function openDB() {
