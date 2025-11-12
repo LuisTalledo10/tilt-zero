@@ -1,0 +1,31 @@
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+.env
+
+# Database
+server/tiltzero.db
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# VSCode
+.vscode/
+
+# Build / temporary
+dist/
+build/
+
+# Misc
+coverage/
+
+# Ignore local secrets
+*.pem
+*.key

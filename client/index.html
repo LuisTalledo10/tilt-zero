@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tilt Zero | Competición de Gestión de Riesgo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-inner">
+        <h1>Tilt Zero</h1>
+        <p class="tag">Competición de Gestión de Riesgo — Duelo de Fichas</p>
+      </div>
+    </header>
+
+    <main class="container">
+
+      <!-- Overlay de login: pedir nombre antes de entrar -->
+      <div id="loginOverlay" style="position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:9999;">
+        <div style="background:#fff;padding:18px;border-radius:10px;min-width:300px;box-shadow:0 8px 30px rgba(0,0,0,0.18);">
+          <h3 style="margin:0 0 8px 0;">Elige un nombre de usuario</h3>
+          <input id="loginName" placeholder="Tu nombre" style="width:100%;padding:8px;border-radius:6px;border:1px solid #ddd;" />
+          <div style="text-align:right;margin-top:12px;">
+            <button id="loginBtn" style="padding:8px 12px;border-radius:6px;background:#2d9cdb;color:#fff;border:none;">Entrar</button>
+          </div>
+        </div>
+      </div>
+      <aside class="panel player-card">
+        <h3>Estado del Jugador</h3>
+        <p><strong id="username">-</strong></p>
+        <p>Fichas: <span id="fichas">-</span></p>
+        <p>ELO: <span id="elo">-</span></p>
+        <!-- (el contenedor de préstamo en el sidebar fue movido al floating en el viewport) -->
+
+        <!-- Contenedor grande de fichas debajo del estado del jugador -->
+        <div class="chip-panel-large">
+          <div class="chips-title">Fichas rápidas</div>
+          <div class="chips-list-large">
+            <button class="chip" data-value="5">5</button>
+            <button class="chip" data-value="10">10</button>
+            <button class="chip" data-value="50">50</button>
+            <button class="chip" data-value="100">100</button>
+            <button class="chip" data-value="500">500</button>
+            <button class="chip" data-value="1000">1000</button>
+          </div>
+          <div style="margin-top:12px; text-align:center;">
+            <button id="clearChips" class="clear-btn">Limpiar</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="panel duel-card" id="duel">
+        <h2>Duelo de Gestión de Fichas</h2>
+
+        <div class="status-row">
+          <div class="diceArea">Resultado del dado: <span id="diceResult">-</span></div>
+          <div class="round-info">Tiempo para apostar: <strong id="roundTimer">-</strong></div>
+        </div>
+
+        <div class="visualization">
+          <div class="vs-container">
+            <div class="vs-bar">
+              <div id="vsRed" class="vs-segment red" style="width:50%"></div>
+              <div id="vsBlue" class="vs-segment blue" style="width:50%"></div>
+            </div>
+            <div class="vs-center">
+              <div id="vsPercent">50% / 50%</div>
+              <div id="vsPot">Pot: 0</div>
+            </div>
+          </div>
+          <div class="vs-details">
+            <div>Rojo: <span id="redTotal">0</span> (<span id="redCount">0</span> bets)</div>
+            <div>Azul: <span id="blueTotal">0</span> (<span id="blueCount">0</span> bets)</div>
+          </div>
+        </div>
+
+        <div class="bet-row">
+          <div class="bet-controls">
+            <div class="bet-amount-display">Monto: <strong id="betDisplay">100</strong> <small id="betSoles" style="color:var(--muted);font-weight:600;margin-left:8px;">(S/200)</small></div>
+            <div id="chipPile" class="chip-pile" aria-hidden="true"></div>
+            <input type="hidden" id="betAmount" value="100" />
+            <div class="buttons">
+              <button id="betRed" class="red" disabled>Apostar Rojo</button>
+              <button id="betBlue" class="blue" disabled>Apostar Azul</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress">
+          <div id="roundProgress" class="progress-bar"></div>
+        </div>
+
+        <div id="userBet" class="user-bet" style="margin-top:8px;color:var(--muted)"></div>
+
+        <div id="messages" class="messages"></div>
+      </section>
+
+      <aside class="panel leaderboard-card">
+        <h3>Leaderboard (Top jugadores)</h3>
+        <ol id="leaderList" class="leader-list"></ol>
+      </aside>
+    </main>
+
+    <!-- Contenedor fijo en la parte inferior para Peter (usa archivo /assets/peter.gif si existe) -->
+    <div id="loanFloating" class="loan-floating" aria-hidden="true">
+      <img id="loanFloatingImg" src="/assets/peter.gif" alt="Peter" onerror="this.style.display='none'" />
+      <div class="loan-floating-text">
+        <div>¿Quieres pedirle prestado a Peter?</div>
+        <button id="loanBtnFloating" class="loan-btn">Sí, pedir a Peter (+10)</button>
+      </div>
+      <button id="loanCloseFloating" aria-label="Cerrar" class="loan-close">×</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>
